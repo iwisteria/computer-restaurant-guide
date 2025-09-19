@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コンピュータレストラン完全ガイド</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .emoji {
+            font-size: 2em;
+            margin: 0 10px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #34495e;
+            font-size: 1.6em;
+            margin: 25px 0 15px 0;
+        }
+
+        .restaurant-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .role-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .role-card:hover {
+            transform: scale(1.05);
+        }
+
+        .role-card.customer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .role-card.waiter {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .role-card.chef {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .role-card.equipment {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .role-card h4 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .flow-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .flow-step {
+            background: #3498db;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .arrow {
+            font-size: 1.5em;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 5px solid #e67e22;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.2);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            background: #ecf0f1;
+            padding: 15px;
+            border-bottom: 1px solid #bdc3c7;
+        }
+
+        .comparison-table tr:hover td {
+            background: #d5dbdb;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .interactive-demo {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .demo-button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .demo-output {
+            background: #34495e;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            min-height: 50px;
+        }
+
+        .trouble-section {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .success-story {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .flow-diagram {
+                flex-direction: column;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ コンピュータレストラン完全ガイド 💻</h1>
+            <p>プログラム、シェル、カーネルの世界をレストランで例えて楽しく学ぼう！</p>
+            <div>
+                <span class="emoji">🎯</span>
+                <span class="emoji">📚</span>
+                <span class="emoji">🚀</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🏢 レストラン（コンピュータシステム）の全体像</h2>
+            <div class="restaurant-layout">
+                <div class="role-card customer">
+                    <h4>🙋 お客さん</h4>
+                    <p><strong>= プログラム・アプリ</strong></p>
+                    <p>ブラウザ、ゲーム、メモ帳、音楽プレイヤーなど。それぞれ違うサービスを求める</p>
+                </div>
+                <div class="role-card waiter">
+                    <h4>🍽️ ウェイター</h4>
+                    <p><strong>= シェル</strong></p>
+                    <p>bash、zsh、PowerShellなど。お客さんの注文を聞いて厨房に伝える</p>
+                </div>
+                <div class="role-card chef">
+                    <h4>👨‍🍳 シェフ長</h4>
+                    <p><strong>= カーネル</strong></p>
+                    <p>Windows NT、Linux、macOSカーネルなど。実際に処理を行う司令塔</p>
+                </div>
+                <div class="role-card equipment">
+                    <h4>🔧 厨房設備</h4>
+                    <p><strong>= ハードウェア</strong></p>
+                    <p>CPU、メモリ、ストレージ、キーボード、ディスプレイなど</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔄 注文から料理提供までの流れ</h2>
+            <div class="flow-diagram">
+                <div class="flow-step">お客さんが注文</div>
+                <div class="arrow">→</div>
+                <div class="flow-step">ウェイターが聞く</div>
+                <div class="arrow">→</div>
+                <div class="flow-step">厨房に伝達</div>
+                <div class="arrow">→</div>
+                <div class="flow-step">シェフが調理</div>
+                <div class="arrow">→</div>
+                <div class="flow-step">料理を提供</div>
+            </div>
+
+            <div class="example-box">
+                <h3>📖 具体例：ウェブページを開く場合</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>レストラン</th>
+                        <th>コンピュータ</th>
+                        <th>詳細説明</th>
+                    </tr>
+                    <tr>
+                        <td>お客さん「パスタをください」</td>
+                        <td>ブラウザ「このURLのページを表示して」</td>
+                        <td>ユーザーがWebサイトのリンクをクリック</td>
+                    </tr>
+                    <tr>
+                        <td>ウェイター「承りました」</td>
+                        <td>シェル「リクエストを受信」</td>
+                        <td>OSがブラウザからの要求を受け取る</td>
+                    </tr>
+                    <tr>
+                        <td>厨房に注文票を渡す</td>
+                        <td>カーネルに処理要求を送信</td>
+                        <td>システムコールでカーネルに依頼</td>
+                    </tr>
+                    <tr>
+                        <td>シェフが食材を取り出す</td>
+                        <td>ストレージからデータを読み込み</td>
+                        <td>HTMLファイルやキャッシュを取得</td>
+                    </tr>
+                    <tr>
+                        <td>調理台で料理を作る</td>
+                        <td>メモリとCPUで処理実行</td>
+                        <td>HTMLパース、CSS適用、JavaScript実行</td>
+                    </tr>
+                    <tr>
+                        <td>完成した料理を提供</td>
+                        <td>画面にWebページを表示</td>
+                        <td>レンダリング結果をディスプレイに出力</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🍳 厨房設備（ハードウェア）の詳細</h2>
+            <div class="restaurant-layout">
+                <div class="role-card equipment">
+                    <h4>🔥 コンロ = CPU</h4>
+                    <p>実際に調理（計算）を行う場所。複数のコンロがあれば同時調理可能（マルチコア）</p>
+                </div>
+                <div class="role-card equipment">
+                    <h4>🍽️ 調理台 = メモリ（RAM）</h4>
+                    <p>調理中の食材を置く作業スペース。広いほど効率的に作業可能</p>
+                </div>
+                <div class="role-card equipment">
+                    <h4>❄️ 冷蔵庫 = ストレージ</h4>
+                    <p>食材の長期保存。ハードディスクやSSDに対応</p>
+                </div>
+                <div class="role-card equipment">
+                    <h4>📋 注文票 = 入力装置</h4>
+                    <p>キーボード、マウス、タッチパネルなど</p>
+                </div>
+                <div class="role-card equipment">
+                    <h4>🍽️ 皿 = 出力装置</h4>
+                    <p>ディスプレイ、スピーカー、プリンターなど</p>
+                </div>
+                <div class="role-card equipment">
+                    <h4>🌐 仕入れルート = ネットワーク</h4>
+                    <p>WiFi、有線LAN、インターネット接続</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>👥 マルチタスク：忙しいレストラン</h2>
+            <p>現代のコンピュータは同時に複数のプログラムを動かします。これはレストランで複数のお客さんに同時に対応するのと同じです。</p>
+            
+            <div class="success-story">
+                <h3>🎭 同時進行の例</h3>
+                <ul>
+                    <li><span class="highlight">テーブル1</span>：カップルが映画鑑賞（Netflixアプリ）🎬</li>
+                    <li><span class="highlight">テーブル2</span>：学生がレポート作成（Wordアプリ）📝</li>
+                    <li><span class="highlight">テーブル3</span>：友人グループが音楽鑑賞（Spotifyアプリ）🎵</li>
+                    <li><span class="highlight">テーブル4</span>：ビジネスマンがプレゼン準備（PowerPointアプリ）📊</li>
+                </ul>
+                
+                <h4>🧠 シェフ長（カーネル）の高度な技術</h4>
+                <p><strong>タイムスライス方式</strong>：「テーブル1を30秒、次にテーブル2を30秒、テーブル3を30秒...」と高速で順番に対応。人間には全て同時に進んでいるように見える！</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⚡ インタラクティブデモ</h2>
+            <div class="interactive-demo">
+                <h3>🎮 レストランシミュレーター</h3>
+                <p>ボタンをクリックして、レストランでの注文処理を体験してみよう！</p>
+                
+                <button class="demo-button" onclick="simulateOrder('web')">🌐 Webページを開く</button>
+                <button class="demo-button" onclick="simulateOrder('music')">🎵 音楽を再生</button>
+                <button class="demo-button" onclick="simulateOrder('game')">🎮 ゲームを起動</button>
+                <button class="demo-button" onclick="simulateOrder('file')">📁 ファイルを保存</button>
+                
+                <div class="demo-output" id="demo-output">
+                    ここに処理の流れが表示されます...
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚨 トラブル対応：レストランの危機管理</h2>
+            <div class="trouble-section">
+                <h3>😈 問題のあるお客さん（悪意のあるプログラム）</h3>
+                <div class="example-box">
+                    <h4>シナリオ：わがままなお客さん</h4>
+                    <p><strong>お客さん</strong>：「厨房の食材を全部使って巨大な料理を作れ！他のお客なんて知らない！」</p>
+                    <p><strong>シェフ長（カーネル）</strong>：「申し訳ございませんが、それは他のお客様にご迷惑をおかけしますので、適切な分量でお作りします」</p>
+                    <p><strong>結果</strong>：メモリ使用量制限、プロセス優先度調整により、システム全体の安定性を保持</p>
+                </div>
+
+                <h3>🔧 その他のトラブル対応</h3>
+                <ul>
+                    <li><strong>食材不足（メモリ不足）</strong>：仮想メモリ（冷凍庫）を活用</li>
+                    <li><strong>コンロ故障（CPUクラッシュ）</strong>：他のコンロに処理を振り分け</li>
+                    <li><strong>注文の取り違え（プロセス間通信エラー）</strong>：エラーハンドリングで適切に対処</li>
+                    <li><strong>停電（システムクラッシュ）</strong>：定期的なバックアップ（レシピの保存）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎯 シェルの種類：いろんなウェイタースタイル</h2>
+            <table class="comparison-table">
+                <tr>
+                    <th>ウェイタータイプ（シェル）</th>
+                    <th>特徴</th>
+                    <th>得意な接客スタイル</th>
+                </tr>
+                <tr>
+                    <td>🧑‍💼 bash（ベテランウェイター）</td>
+                    <td>最も一般的、豊富な経験</td>
+                    <td>どんな注文でも確実に対応</td>
+                </tr>
+                <tr>
+                    <td>✨ zsh（スマートウェイター）</td>
+                    <td>高機能、自動補完が優秀</td>
+                    <td>注文を予測して効率的にサービス</td>
+                </tr>
+                <tr>
+                    <td>🐠 fish（親しみやすいウェイター）</td>
+                    <td>初心者に優しい、分かりやすい</td>
+                    <td>新規のお客さんでも安心</td>
+                </tr>
+                <tr>
+                    <td>💪 PowerShell（多機能ウェイター）</td>
+                    <td>オブジェクト指向、Windows得意</td>
+                    <td>複雑な注文も体系的に処理</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🎓 まとめ：レストランから学んだこと</h2>
+            <div class="success-story">
+                <h3>🌟 重要なポイント</h3>
+                <ol>
+                    <li><strong>役割分担の重要性</strong>：お客さん（プログラム）、ウェイター（シェル）、シェフ（カーネル）がそれぞれの専門性を活かして協力</li>
+                    <li><strong>安全性の確保</strong>：問題のあるお客さんがいても、レストラン全体の運営は継続</li>
+                    <li><strong>効率的なリソース管理</strong>：限られた設備を複数のお客さんで効率よく共有</li>
+                    <li><strong>拡張性</strong>：新しいメニュー（アプリ）や設備（ハードウェア）を追加可能</li>
+                    <li><strong>ユーザーフレンドリー</strong>：お客さんは厨房の複雑さを知らなくても美味しい料理を楽しめる</li>
+                </ol>
+
+                <p style="font-size: 1.2em; margin-top: 20px; text-align: center;">
+                    <strong>🎉 これで、あなたもコンピュータシステムの仕組みをレストランのように理解できました！</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function simulateOrder(type) {
+            const output = document.getElementById('demo-output');
+            let steps = [];
+            
+            switch(type) {
+                case 'web':
+                    steps = [
+                        '🙋 お客さん: "このWebサイトを見せて"',
+                        '🍽️ ウェイター(Shell): "承りました、厨房に伝えます"',
+                        '👨‍🍳 シェフ長(Kernel): "ネットワーク班、データを取ってきて"',
+                        '🌐 ネットワーク: "HTMLファイルを取得中..."',
+                        '🧠 CPU: "HTMLを解析してレンダリング中..."',
+                        '💾 メモリ: "画像とCSSを一時保存..."',
+                        '🖥️ ディスプレイ: "Webページを表示完了！"'
+                    ];
+                    break;
+                case 'music':
+                    steps = [
+                        '🙋 お客さん: "この曲を再生して"',
+                        '🍽️ ウェイター(Shell): "音楽の注文ですね"',
+                        '👨‍🍳 シェフ長(Kernel): "ストレージから音楽ファイルを取得"',
+                        '💽 ストレージ: "MP3ファイル見つかりました"',
+                        '🧠 CPU: "音声データをデコード中..."',
+                        '💾 メモリ: "音声バッファに準備完了"',
+                        '🔊 スピーカー: "♪ 音楽再生開始！"'
+                    ];
+                    break;
+                case 'game':
+                    steps = [
+                        '🙋 お客さん: "ゲームを起動して"',
+                        '🍽️ ウェイター(Shell): "ゲームの注文承りました"',
+                        '👨‍🍳 シェフ長(Kernel): "大きな調理台(メモリ)を確保"',
+                        '💽 ストレージ: "ゲームファイルをロード中..."',
+                        '🧠 CPU: "グラフィック処理を開始"',
+                        '🎮 GPU: "3Dレンダリング実行中..."',
+                        '🖥️ ディスプレイ: "🎮 ゲーム画面表示完了！"'
+                    ];
+                    break;
+                case 'file':
+                    steps = [
+                        '🙋 お客さん: "このファイルを保存して"',
+                        '🍽️ ウェイター(Shell): "ファイル保存の依頼ですね"',
+                        '👨‍🍳 シェフ長(Kernel): "ファイルシステムに保存指示"',
+                        '📁 ファイルシステム: "保存場所を確認中..."',
+                        '💽 ストレージ: "書き込み領域を確保"',
+                        '💾 メモリ: "データを一時的にバッファリング"',
+                        '✅ システム: "📄 ファイル保存完了！"'
+                    ];
+                    break;
+            }
+            
+            output.innerHTML = '';
+            let i = 0;
+            
+            function showNextStep() {
+                if (i < steps.length) {
+                    output.innerHTML += steps[i] + '<br>';
+                    i++;
+                    setTimeout(showNextStep, 800);
+                } else {
+                    output.innerHTML += '<br><span style="color: #2ecc71; font-weight: bold;">✨ 処理完了！レストランの連携プレーお疲れ様でした！</span>';
+                }
+            }
+            
+            showNextStep();
+        }
+
+        // ページロード時の初期メッセージ
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('demo-output').innerHTML = '🎬 上のボタンをクリックして、レストラン（コンピュータ）の舞台裏を覗いてみよう！';
+        });
+    </script>
+</body>
+</html>
