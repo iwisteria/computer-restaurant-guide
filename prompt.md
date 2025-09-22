@@ -1,0 +1,1 @@
+computer-restaurant-guide-iconを、macOSとiOSで正しく表示されるようにアイコンとファビコンを設定してください。safariのお気に入りでも正しく表示されるようにしてください
